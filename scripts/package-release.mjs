@@ -67,7 +67,7 @@ if (platform === 'windows') {
   execFileSync('codesign', ['--verify', '--deep', '--strict', app], { stdio: 'inherit' });
   execFileSync(
     'lipo',
-    ['-verify_arch', 'x86_64', 'arm64', path.join(app, 'Contents/MacOS/mojibake-lab')],
+    [path.join(app, 'Contents/MacOS/mojibake-lab'), '-verify_arch', 'x86_64', 'arm64'],
     { stdio: 'inherit' },
   );
   execFileSync(
