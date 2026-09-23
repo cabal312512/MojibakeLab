@@ -1,0 +1,3 @@
+[target.x86_64-pc-windows-msvc]
+# Keep the desktop executable independent of a VC++ redistributable installer.
+rustflags = ["-C", "target-feature=+crt-static"]

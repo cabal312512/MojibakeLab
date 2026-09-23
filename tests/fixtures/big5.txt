@@ -1,0 +1,2 @@
+繁體中文測試
+Mojibake Lab

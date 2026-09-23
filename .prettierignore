@@ -1,0 +1,12 @@
+.tools/
+.cache/
+.tmp/
+target/
+release/
+dist/
+node_modules/
+runtime-data/
+__preview__/
+test-results/
+src-tauri/gen/
+package-lock.json
