@@ -18,3 +18,4 @@ Mojibake Lab · 乱码尸检室
 
 当前版本未做代码签名。
 开源许可证：LICENSE。第三方许可证：THIRD_PARTY_LICENSES.txt。
+单文件 EXE 也内嵌了上述许可文本，点击窗口底部 MIT 可离线查看。

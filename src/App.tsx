@@ -30,6 +30,7 @@ import { dictionaries, initialLocale, message, sampleKeys, type Translate } from
 import { Candidates } from './components/Candidates';
 import { Inspector, type InspectorTab } from './components/Inspector';
 import { TransformationStrip } from './components/TransformationStrip';
+import { Licenses } from './components/Licenses';
 
 declare global {
   interface Window {
@@ -395,6 +396,7 @@ export default function App() {
       )}
 
       <footer className="app-footer">
+        <Licenses t={t} />
         <span>
           <LockKeyhole size={10} />
           {t('local')}

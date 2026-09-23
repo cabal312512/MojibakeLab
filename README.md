@@ -11,7 +11,18 @@
 
 ## 使用
 
-Windows 便携版：双击项目根目录的 **启动 Mojibake Lab.cmd**，或直接运行 `release/MojibakeLab/MojibakeLab.exe`。无需安装。Windows 10/11 需已有 Microsoft Edge WebView2 Runtime；本程序不会自动安装或联网下载运行时。
+从 **[Releases 下载最新版](https://github.com/cabal312512/MojibakeLab/releases/latest)**。
+
+| 平台 | 下载格式 |
+| --- | --- |
+| Windows 10/11 x64 | 单文件 `portable.exe`、便携 `portable.zip`、安装版 `setup.exe` |
+| macOS 11+，Apple Silicon / Intel | 通用版 `.dmg`、`.app.zip` |
+| Linux x64 | `.AppImage`、`.deb`、`.tar.gz` |
+| 源码 | `source.zip`，以及 GitHub 自动生成的源码包 |
+
+Windows 推荐单文件便携版：只下载一个 EXE，放入可写文件夹后双击即可。系统需已有 Microsoft Edge WebView2 Runtime；程序不会自动安装或联网下载运行时。运行后会生成同目录 `runtime-data`，开源许可已内嵌，可点击窗口底部 **MIT** 查看。
+
+从本地源码构建后，也可双击项目根目录的 **MojibakeLab.cmd** 或运行 `release/MojibakeLab/MojibakeLab.exe`。发布包的 `SHA256SUMS.txt` 可用于校验下载完整性。Windows 构建未签名，macOS 使用临时签名但未经 Apple 公证，首次打开可能需要系统确认。
 
 1. 在首页直接输入乱码、粘贴文本或拖入文件。也可以打开内置示例。
 2. 选择候选，查看恢复文字和底部的转换路径；需要时展开详细步骤。
@@ -51,6 +62,8 @@ Windows 便携版：双击项目根目录的 **启动 Mojibake Lab.cmd**，或�
 应用不包含账号、AI 服务、遥测、更新检查或远程字体。生产页面 CSP 限制网络访问，导航只允许应用本地页面。文件处理全部在 Rust 中进行，证据不上传。
 
 Windows 便携版的应用设置、WebView 数据和临时文件位于程序旁边的 `runtime-data`；使用根目录启动脚本时位于项目根目录。应用不修改系统 PATH、注册表或默认程序。操作系统和系统 WebView 自身管理的日志、文件选择器历史等不属于应用可完全控制的范围。
+
+macOS 使用 `~/Library/Application Support/MojibakeLab`；Linux 使用 `$XDG_DATA_HOME/mojibake-lab` 或 `~/.local/share/mojibake-lab`，避免向只读 AppImage 或已签名的应用包写入。可以用 `MOJIBAKE_DATA_DIR` 指定其他数据目录。Windows 安装包提供正常的安装和卸载流程，与免安装 EXE 区分。
 
 构建工具、npm/Cargo 依赖、下载和构建缓存均保留在本项目的 `.tools`、`.cache`、`.tmp`、`node_modules` 和 `target` 下；不需要将这些目录提交到 GitHub。
 
@@ -97,3 +110,5 @@ npm run desktop:build
 ## 发布到 GitHub
 
 源码和锁文件可直接提交；`.gitignore` 已排除本地工具链、依赖、缓存、用户数据和编译输出。不要把 `.tools` 中的 Microsoft SDK/compiler 打包上传。发布 Windows 便携版时压缩 `release/MojibakeLab`，保留许可证文件，排除 `runtime-data`。当前版本未做代码签名；其他平台的发布包需在对应平台构建和验证。
+
+正式发布使用 [Release 工作流](.github/workflows/release.yml)：更新 `.github/release-plan.json` 时自动触发，也可手动运行或推送版本标签。三个平台完成测试和打包后，生成源码包及 SHA-256 校验文件，先上传草稿，资产齐全后再公开 Release。已公开版本不会被工作流覆盖。发布说明位于 `docs/releases/`。

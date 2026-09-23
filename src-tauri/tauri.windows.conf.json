@@ -1,0 +1,11 @@
+{
+  "bundle": {
+    "windows": {
+      "nsis": {
+        "installMode": "currentUser",
+        "languages": ["English", "SimpChinese", "Japanese"],
+        "displayLanguageSelector": true
+      }
+    }
+  }
+}

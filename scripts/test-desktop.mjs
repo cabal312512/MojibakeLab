@@ -16,6 +16,12 @@ page.setDefaultTimeout(30000);
 await page.waitForSelector('.app');
 expect(await page.evaluate(() => localStorage.getItem('mojibake.locale'))).toBe('en');
 await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+await page.getByRole('button', { name: 'MIT', exact: true }).click();
+await expect(page.locator('.license-dialog')).toBeVisible();
+await expect(page.locator('.license-dialog pre')).toContainText('Copyright (c) 2026 cabal312512');
+await expect(page.locator('.license-dialog pre')).toContainText('THIRD-PARTY LICENSES');
+await page.keyboard.press('Escape');
+await expect(page.locator('.license-dialog')).not.toBeVisible();
 const issues = [],
   external = [];
 page.on('pageerror', (error) => issues.push(error.message));
@@ -157,6 +163,7 @@ await writeFile(
       passed: true,
       checks: [
         'English on a fresh profile',
+        'embedded offline license viewer',
         'light-only profile migration',
         'native paste IPC',
         'candidate selection',

@@ -1,3 +1,4 @@
+mod data_dir;
 mod files;
 mod streaming;
 
@@ -131,15 +132,13 @@ async fn read_hex(
         .map_err(|e| e.to_string())?
 }
 
+#[tauri::command]
+fn license_text() -> &'static str {
+    include_str!(concat!(env!("OUT_DIR"), "/licenses.txt"))
+}
+
 pub fn run() {
-    let portable = std::env::var_os("MOJIBAKE_DATA_DIR")
-        .map(PathBuf::from)
-        .or_else(|| {
-            std::env::current_exe()
-                .ok()
-                .and_then(|path| path.parent().map(|p| p.join("runtime-data")))
-        })
-        .expect("Cannot determine application folder");
+    let portable = data_dir::resolve().expect("Cannot determine application data folder");
     let temp = portable.join("temp");
     std::fs::create_dir_all(&temp).expect("Application folder must be writable");
     // Scoped to this process and its WebView child; never changes system settings.
@@ -149,7 +148,7 @@ pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
         .manage(Cases::default())
-        .invoke_handler(tauri::generate_handler![analyze_text,analyze_file,analyze_sample,save_candidate,copy_candidate,read_hex])
+        .invoke_handler(tauri::generate_handler![analyze_text,analyze_file,analyze_sample,save_candidate,copy_candidate,read_hex,license_text])
         .setup(move |app| {
             tauri::WebviewWindowBuilder::new(app,"main",tauri::WebviewUrl::App("index.html".into()))
                 .title("Mojibake Lab")

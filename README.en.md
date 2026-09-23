@@ -10,7 +10,18 @@ A small, fully offline desktop tool for investigating broken text encodings. Ope
 
 ## Run on Windows
 
-Double-click **启动 Mojibake Lab.cmd** in the project root, or run `release/MojibakeLab/MojibakeLab.exe`. The portable build needs no installation. Windows 10/11 must already have Microsoft Edge WebView2 Runtime; the application does not install or download it.
+**[Download the latest release](https://github.com/cabal312512/MojibakeLab/releases/latest).**
+
+| Platform | Downloads |
+| --- | --- |
+| Windows 10/11 x64 | Single-file `portable.exe`, `portable.zip`, `setup.exe` installer |
+| macOS 11+, Apple Silicon and Intel | Universal `.dmg` and `.app.zip` |
+| Linux x64 | `.AppImage`, `.deb`, `.tar.gz` |
+| Source | `source.zip` and GitHub's automatic source archives |
+
+For Windows, download the single-file EXE into a writable folder and run it. **Microsoft Edge WebView2 Runtime must already be installed**; it is not embedded or silently downloaded. The EXE creates `runtime-data` beside itself. License notices are embedded and available through **MIT** in the footer.
+
+After building from source, double-click **MojibakeLab.cmd** in the project root, or run `release/MojibakeLab/MojibakeLab.exe`. Verify downloads using `SHA256SUMS.txt`. Windows builds are unsigned; macOS bundles have an ad-hoc signature and are not notarized, so operating-system confirmation may be needed.
 
 1. Open or drop a plain-text file, paste text into the editor, or choose a bundled sample.
 2. Select a candidate. The recovery path stays visible below the text; tabs expose the full path, comparison, evidence, score, and hex view.
@@ -48,6 +59,8 @@ The tool searches bounded conversion paths, scores the resulting text, and merge
 No accounts, AI services, telemetry, update checks, or remote fonts. Rust handles file processing locally. Production content security policy restricts network access, and navigation is limited to local application pages.
 
 On Windows, settings, WebView data, and temporary files live in `runtime-data` beside the executable, or under the project root when using the root launcher. The app does not change the system PATH, registry, or default applications. Operating-system and system-WebView logs and file-dialog history are outside its complete control.
+
+macOS uses `~/Library/Application Support/MojibakeLab`; Linux uses `$XDG_DATA_HOME/mojibake-lab` or `~/.local/share/mojibake-lab`. This keeps writes outside read-only AppImages and signed app bundles. Set `MOJIBAKE_DATA_DIR` to override the location. The optional Windows installer provides a conventional installation/uninstallation flow separately from the portable EXE.
 
 The Windows development scripts keep tools, dependencies, downloads, and caches inside `.tools`, `.cache`, `.tmp`, `node_modules`, and `target`. These directories are excluded from source control.
 
@@ -94,5 +107,7 @@ The repository includes a Windows, Linux, and macOS CI matrix; see GitHub Action
 ## Publishing
 
 Commit source and lockfiles; keep local tools, caches, application data, and build outputs out of Git. Do not redistribute the Microsoft SDK/compiler from `.tools`. For a Windows portable release, archive `release/MojibakeLab`, retain its license files, and exclude `runtime-data`. The current application is unsigned.
+
+The [Release workflow](.github/workflows/release.yml) runs when `.github/release-plan.json` changes, on version tags, or manually. It tests and builds all three platforms, creates a source archive and checksums, uploads to a draft, and publishes only after every asset is present. Existing public releases are never overwritten. Release notes live in `docs/releases/`.
 
 [Architecture](docs/ARCHITECTURE.md) · [Third-party notices](THIRD_PARTY_NOTICES.md) · [MIT license](LICENSE)

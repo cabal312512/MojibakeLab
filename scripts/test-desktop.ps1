@@ -8,7 +8,7 @@ if (-not $MojibakeExecutable.StartsWith($MojibakeRoot + '\', [System.StringCompa
 }
 $env:MOJIBAKE_DATA_DIR = Join-Path $MojibakeRoot ('.tmp\desktop-test-' + [Guid]::NewGuid().ToString('N'))
 $env:WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS = '--remote-debugging-port=9223'
-$MojibakeAppProcess = Start-Process -FilePath $MojibakeExecutable -WorkingDirectory $MojibakeRoot -WindowStyle Hidden -PassThru
+$MojibakeAppProcess = Start-Process -FilePath $MojibakeExecutable -WorkingDirectory (Split-Path -Parent $MojibakeExecutable) -WindowStyle Hidden -PassThru
 try {
     $MojibakeReady = $false
     for ($MojibakeAttempt = 0; $MojibakeAttempt -lt 50; $MojibakeAttempt++) {

@@ -1,6 +1,7 @@
 import type { Locale } from '../types';
 
 const en = {
+  licenses: 'Licenses',
   appName: 'Mojibake Lab',
   appSubtitle: 'Encoding forensics',
   workspace: 'Workspace',
@@ -154,6 +155,7 @@ export type MessageKey = keyof typeof en;
 type Dictionary = Record<MessageKey, string>;
 
 const zh: Dictionary = {
+  licenses: '开源许可',
   appName: '乱码尸检室',
   appSubtitle: '字符编码取证',
   workspace: '工作台',
@@ -302,6 +304,7 @@ const zh: Dictionary = {
 };
 
 const ja: Dictionary = {
+  licenses: 'ライセンス',
   appName: 'Mojibake Lab',
   appSubtitle: '文字コード解析',
   workspace: 'ワークスペース',
